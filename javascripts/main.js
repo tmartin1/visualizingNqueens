@@ -1,31 +1,29 @@
+var printing = false;
 var nQueens = function() {
-	var N = Math.floor(document.getElementById("nSet").value);
+	var N = Math.floor($("#nSet").val());
 	if (N > 15) N = 15;
-	var legals = [], cache = [], solutions = [], currentSolution = [];
-	// Build chess board.
+	var board = [], cache = [], solutions = [], currentSolution = [];
 	for (var i=0; i<(N*N); i++) {
-	  legals[i] = 0;
+	  board[i] = 0;
 	}
 
 	var placeQueens = function(rowNumber) {
 	  if (rowNumber === N) {
-	    // base case
 	    solutions.push(currentSolution.slice());
 	  } else {
-	    // recursive case
 	    for (var i=0; i<N; i++) {
 	      var position = rowNumber*N+i;
-	      if (legals[position] === 0) {
+	      if (board[position] === 0) {
 	        // place queen on first legal square in row.
 	        currentSolution.push(i);
 	        for (var j=0; j<cache[position].length; j++) {
-	          legals[cache[position][j]] += 1;
+	          board[cache[position][j]] += 1;
 	        }
 	        // place next queen.
 	        placeQueens(rowNumber+1);
 	        // pick queen up, continue to look through row.
 	        for (var j=0; j<cache[position].length; j++) {
-	          legals[cache[position][j]] -= 1;
+	          board[cache[position][j]] -= 1;
 	        }
 	        currentSolution.pop();
 	      }
@@ -54,42 +52,61 @@ var nQueens = function() {
 	  return results;
 	};
 
-	var printBoard = function() {
-		document.getElementById("display").innerHTML = "";
-	  
-	  (function timedDisplay(board) {
-		  // for (var board = 0; board < num; board++) {
-		  setTimeout(function() {
-		    var printed = "";
-		    for (var y = 0; y < N; y++) {
-		      var line = "";
-		      var queenPosition = solutions[board][y];
-		      for (x = 0; x < N; x++) {
-		        if (x === queenPosition) {
-		          line += String.fromCharCode(9813); // queen char code
-		        } else {
-		          if ((y+x)%2 === 0) line += String.fromCharCode(9634); // white square
-		          else line += String.fromCharCode(9641); // black square
-		        }
-		      }
-		      printed += "<br>"+line;
-		    }
-		    document.getElementById("display").innerHTML = printed;
-		  	if (++board < solutions.length) timedDisplay(board);
-		  // }
-			}, 1000/Math.sqrt(solutions.length/(solutions.length/100)))
-	  })(0);
-	};
-
-
-
 	var start = new Date().getTime();
 	buildCache();
 	placeQueens(0);
 	var end = new Date().getTime();
+
 	var runtime = end - start;
-	// Results are found, ask user if they want to see results.
 	var message = solutions.length+' solutions found for '+N+' queens in '+runtime+'ms.';
-	document.getElementById("displayHeader").innerHTML = message;
-	printBoard();
+	if (!printing) {
+		$('#displayHeader').html(message);
+		printBoard(N, solutions);
+	}
 };
+
+var printBoard = function(N, solutions) {
+  if (printing) return;
+  printing = true;
+	buildDisplay(N);
+  (function timedDisplay(board) {
+	  setTimeout(function() {
+	    // Modify the board
+	    for (var i=0; i<solutions[board].length; i++) {
+	    	// Clear previously displayed results.
+		    if (board > 0) $('#cell'+(solutions[board-1][i]+i*N)).html('');
+	    	$('#cell'+(solutions[board][i]+i*N)).html('&#9813;');
+	    }
+			if (board === solutions.length-1) printing = false;
+	  	if (++board < solutions.length) timedDisplay(board);
+		}, 1000/Math.sqrt(solutions.length/(solutions.length/100)));
+  })(0);
+};
+
+var buildDisplay = function(N) {
+	$('#display').empty();
+	for (var x=0; x<N; x++) {
+		var row = $('<tr></tr>');
+		for (var y=0; y<N; y++) {
+			var cell = $('<td></td>');
+			var cellid = 'cell'+((x*N)+y);
+			cell.attr({ id: cellid, align: 'center' });
+			cell.css({ 'width': '36px',	'height': '36px', 'padding': '0px' });
+			if ((y+x)%2 === 1) cell.css("background-color", "LightGray"); // black square
+			row.append(cell);
+		}
+		$('#display').append(row);
+	}
+};
+
+$(document).ready(function() {
+	$('#nSet').keyup(function() {
+		if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+       this.value = this.value.replace(/[^0-9\.]/g, '');
+    }
+	});
+
+	$('#nSet').keypress(function(e) {
+		if(e.which === 13) nQueens();
+	});
+});

@@ -5,18 +5,19 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="VisualizingNqueens : ">
-    <script type="text/javascript" src="javascripts/main.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="javascripts/iframeResizer.contentWindow.min.js"></script>
+    <script type="text/javascript" src="javascripts/main.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>VisualizingNqueens</title>
+    <title>Visualizing N-Queens</title>
   </head>
 
   <body>
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <h1 id="project_title">VisualizingNqueens</h1>
+          <h1 id="project_title">Visualizing N-Queens</h1>
           <h2 id="project_tagline"></h2>
         </header>
     </div>
@@ -24,15 +25,20 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
+
+      <div style="width:360px; margin-left:auto; margin-right:auto;">
+        <p>Once all solutions are found, the display below will tell you how many solutions were found, how long it took to find them, and will show all of the solution boards.</p><hr>
         <label for="nSet">Enter 'N'</label>
-        <input id="nSet" value="5" style="width:50px; padding-left:10px; margin:auto 10px">
-        <button onclick="nQueens()" style="border:1px solid grey; border-radius:5px; margin-left:5px; padding:0px 4px; font-size:90%; background-color:WhiteSmoke;">Find Solutions</button>
-        <i style="margin:auto 10px; font-size:80%">(Max N is 15)</i>
-        <div>
-          <h5 id="displayHeader">Solutions Display</h5>
-          <!-- <div id="timer"></div> -->
-          <div id="display" style="width:500px; hieght:500px; line-height:95%;">Click 'Find Solutions' above to see results</div>
-        </div>
+        <input id="nSet" value="7" style="width:50px; padding-left:10px; margin:auto 10px">
+        <button onclick="nQueens()" style="border:1px solid grey; border-radius:5px; margin-left:4px; padding:0px 4px; font-size:90%; background-color:WhiteSmoke;">Find Solutions</button>
+        <span style="margin:auto 10px; font-size:80%; font-style:italic">(Max N is 15)</span>
+
+        <h6 id="displayHeader">Solutions Display</h6>
+        <table id="display" style="margin-left:auto; margin-right:auto; font-size:150%; font-weight:bold"></table>
+
+        <p style="font-style:italic; font-size:90%">Note: The higher the N value, the longer it will take (N=15 can take up to a full minute to run).</p>
+      </div>
+
       </section>
     </div>
 
