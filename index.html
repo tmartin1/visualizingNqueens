@@ -27,12 +27,14 @@
 
           <div style="width:600px; margin-left:auto; margin-right:auto;">
             <p>Once all solutions are found, the display below will tell you how many solutions were found, how long it took to find them, and will show all of the solution boards.</p><hr>
-            <label for="nSet">Enter 'N'</label>
-            <input id="nSet" value="7" style="width:50px; padding-left:10px; margin:auto 10px">
-            <button onclick="nQueens()" style="border:1px solid grey; border-radius:5px; margin-left:4px; padding:0px 4px; font-size:90%; background-color:WhiteSmoke;">Find Solutions</button>
-            <span style="margin:auto 10px; font-size:80%; font-style:italic">(Max N is 15)</span>
+            <h6>
+              <label for="nSet">Enter 'N'</label>
+              <input id="nSet" value="7" style="width:50px; padding:4px 10px; margin:auto 10px; font-size:90%">
+              <button onclick="nQueens()" style="border:1px solid grey; border-radius:5px; margin-left:4px; padding:4px 8px; font-size:100%; background-color:WhiteSmoke;">Find Solutions</button>
+              <span style="margin:auto 10px; font-size:80%; font-style:italic">(Max N is 15)</span>
+            </h6>
 
-            <h6 id="displayHeader">Solutions Display</h6>
+            <p id="displayHeader">Press 'Find Solutions' above to run the algorithm.</p>
             <table id="display" style="margin-left:auto; margin-right:auto; font-size:150%; font-weight:bold"></table>
 
             <p style="font-style:italic; font-size:90%">Note: The higher the N value, the longer it will take (N=15 can take up to a full minute to run).</p>
@@ -44,8 +46,8 @@
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">VisualizingNqueens maintained by <a href="https://github.com/tmartin1">tmartin1</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p class="copyright">VisualizingNqueens maintained by <a href="https://github.com/tmartin1" target="_blank">tmartin1</a></p>
+        <p>Published with <a href="http://pages.github.com" target="_blank">GitHub Pages</a></p>
       </footer>
     </div>
 
